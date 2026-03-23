@@ -20,6 +20,9 @@ def convex_hull_jarvis(points: List[Point]) -> List[Point]:
 
     if points == []:
         return -1
+    
+    if len(points) == 1:
+        return [points[0]]
 
     points.sort()
     hull = [points[0]]
@@ -33,19 +36,24 @@ def convex_hull_jarvis(points: List[Point]) -> List[Point]:
     hull.append(points[q])
     p = q
     
-    while points[p] != hull[0]:
-        q = p + 1
-        for i in range(0, len(points) - 1):
+    while points[q] != hull[0]:
+        
+        q = 0
+        for i in range(0, len(points)):
             if find_orientation(points[p], points[q], points[i]) == 2:
                 q = i
-        hull.append(points[q])
-        p = q
+
+        if points[q] != hull[0]:
+            hull.append(points[q])
+            p = q
     
     return hull
     
 if __name__ == "__main__":
-    points = [(0, 3), (2, 2), (1, 1), (2, 1), (3, 0), (0, 0), (3, 3)]
-    hull = convex_hull_jarvis(points) 
+    #points = [(0, 3), (2, 2), (1, 1), (2, 1), (3, 0), (0, 0), (3, 3)]
+    hull = convex_hull_jarvis([(0, 3), (2, 3), (2, 2), (1, 1), (2, 1), (3, 0), (3, 1), (0, 0), (3, 3)])
+
+    #hull = convex_hull_jarvis(points) 
     print("Convex Hull:", hull)
 
 
